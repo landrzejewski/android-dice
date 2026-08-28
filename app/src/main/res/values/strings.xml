@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Dice</string>
     <string name="rzut">RZUT</string>
-    <string name="suma_poczatkowa">0</string>
     <string name="opis_kosci">Kosc do gry</string>
 </resources>
