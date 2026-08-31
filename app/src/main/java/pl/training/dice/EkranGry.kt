@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.training.dice.ui.theme.MotywDice
 
-}
 
 @Preview(showBackground = true)
 @Composable
