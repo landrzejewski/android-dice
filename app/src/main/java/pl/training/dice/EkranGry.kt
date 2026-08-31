@@ -26,11 +26,68 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.training.dice.ui.theme.MotywDice
 
+@Composable
+fun EkranGry(
+    modifier: Modifier = Modifier,
+    stanGry: StanGry = remember { StanGry() }
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.tlo_gry))
+            .safeDrawingPadding(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        RzadKosci(stanGry, PIERWSZY_RZAD)
+        RzadKosci(stanGry, DRUGI_RZAD)
+        Button(
+            onClick = stanGry::rzut,
+            modifier = Modifier.padding(MARGINES),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(R.color.tlo_przycisku),
+                contentColor = colorResource(R.color.white)
+            )
+        ) {
+            Text(text = stringResource(R.string.rzut))
+        }
+        Text(
+            text = stanGry.sumaOczek.toString(),
+            fontSize = ROZMIAR_SUMY
+        )
+    }
+}
+
+@Composable
+private fun RzadKosci(stanGry: StanGry, indeksy: IntRange) {
+    Row {
+        for (indeks in indeksy) {
+            ObrazKosci(
+                stanGry.widokKosci[indeks],
+                { stanGry.przelaczDostepnosc(indeks) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ObrazKosci(kosc: WidokKosci, onKlik: () -> Unit) {
+    Image(
+        painter = painterResource(OBRAZY_KOSCI[kosc.identyfikatorPliku]),
+        contentDescription = stringResource(R.string.opis_kosci),
+        modifier = Modifier
+            .padding(MARGINES)
+            .size(ROZMIAR_KOSCI)
+            .alpha(if (kosc.dostepna) PELNA_WIDOCZNOSC else CZESCIOWA_WIDOCZNOSC)
+            .clickable(onClick = onKlik)
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
 private fun PodgladEkranuGry() {
     MotywDice {
+        EkranGry()
     }
 }
 
